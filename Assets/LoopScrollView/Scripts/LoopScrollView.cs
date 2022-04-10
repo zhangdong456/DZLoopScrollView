@@ -615,15 +615,38 @@ namespace ScrollView
         {
             isUpdateCheckVectory = true;
         }
+        //冻结滚轮
+        public void OnFrzeon()
+        {
+            if (m_Direction== e_Direction.Horizontal)
+            {
+                m_ScrollRect.horizontal = false;
+            }
+            else
+            {
+                m_ScrollRect.vertical = false;
+            }
+        }
+        //恢复滚轮
+        public void OnRecover()
+        {
+            if (m_Direction== e_Direction.Horizontal)
+            {
+                m_ScrollRect.horizontal = true;
+            }
+            else
+            {
+                m_ScrollRect.vertical = true;
+            }
+        }
 
         private void Update()
         {
             if (isUpdateCheckVectory)
             {
-                if (/*(m_ScrollRect.velocity.y<300f&& m_Direction== e_Direction.Vertical) ||*/
-                     (m_ScrollRect.velocity.x < 10f && m_Direction == e_Direction.Horizontal))
+                if ((Mathf.Abs(m_ScrollRect.velocity.y)<300f&& m_Direction== e_Direction.Vertical) ||
+                    (Mathf.Abs(m_ScrollRect.velocity.x )< 300f && m_Direction == e_Direction.Horizontal))
                 {
-                    Debug.Log("停止运动");
                     m_ScrollRect.StopMovement();
                     isUpdateCheckVectory = false;
                     UpdateRefreshSpecitalCell();
